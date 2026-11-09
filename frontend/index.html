@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#101827" />
+  <title>Fieldnotes — Semantic Document Retrieval</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">F</span><span>Fieldnotes<small>LLM-free semantic retrieval</small></span></a>
+      <div class="status"><span id="statusDot" class="dot"></span><span id="apiStatus">Checking API…</span></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow">YOUR LOCAL KNOWLEDGE WORKSPACE</div>
+        <h1>Find the right passage.<br><span>Not just a keyword.</span></h1>
+        <p>Upload your documents and search their meaning using local embeddings and vector similarity. No generative LLM is used.</p>
+      </section>
+
+      <section class="panel upload-panel">
+        <div class="section-heading"><div><div class="eyebrow">01 / KNOWLEDGE BASE</div><h2>Add documents</h2></div><span class="pill">PDF · DOCX · TXT</span></div>
+        <form id="uploadForm" class="upload-form">
+          <label class="dropzone" for="fileInput"><span class="upload-icon">↑</span><strong id="fileLabel">Choose a document to upload</strong><small>Maximum file size: 20 MB</small><input id="fileInput" type="file" accept=".pdf,.docx,.txt" required /></label>
+          <button class="button primary" type="submit" id="uploadButton">Upload document</button>
+        </form>
+        <div id="uploadMessage" class="message" role="status"></div>
+      </section>
+
+      <section class="panel search-panel">
+        <div class="section-heading"><div><div class="eyebrow">02 / SEMANTIC SEARCH</div><h2>Ask your documents</h2></div><span class="pill">Top matches</span></div>
+        <form id="searchForm" class="search-form">
+          <input id="queryInput" type="search" maxlength="2000" placeholder="e.g. How does authentication work?" required />
+          <select id="topK" aria-label="Number of results"><option value="3">3 results</option><option value="5" selected>5 results</option><option value="10">10 results</option></select>
+          <button class="button primary" type="submit" id="searchButton">Search</button>
+        </form>
+        <div id="searchMessage" class="message" role="status"></div>
+        <div id="results" class="results"><div class="empty-state"><span>⌕</span><p>Your relevant passages will appear here.</p></div></div>
+      </section>
+
+      <section class="panel library-panel">
+        <div class="section-heading"><div><div class="eyebrow">03 / LIBRARY</div><h2>Indexed documents</h2></div><button class="button subtle" id="refreshButton" type="button">↻ Refresh</button></div>
+        <div id="documents" class="document-list"><div class="empty-state">Loading documents…</div></div>
+      </section>
+    </main>
+    <footer><span>FIELDNOTES</span><span>Local embeddings · ChromaDB · FastAPI</span></footer>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
